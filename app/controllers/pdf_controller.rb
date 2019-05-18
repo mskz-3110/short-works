@@ -4,7 +4,7 @@ class PdfController < ApplicationController
   end
   
   def view
-    url = ShortWorks::Params.get( params, "url", "" ){|value| ShortWorks::GoogleDrive.download_url( value )}
+    url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
     data = ShortWorks::Params.get( params, "data", "" )
     format = ShortWorks::Params.get( params, "format", "html" )
     ShortWorks::Tmp.mkdir{
@@ -28,7 +28,7 @@ class PdfController < ApplicationController
   def gzsl
     name = ShortWorks::Params.get( params, "name", "" ){|value| File.basename( value )}
     name = "gzsl_#{`date \"+%Y%m%d_%H%M\"`.chomp}" if name.empty?
-    url = ShortWorks::Params.get( params, "url", "" ){|value| GoogleDrive.download_url( value )}
+    url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
     data = ShortWorks::Params.get( params, "data", "" )
     format = ShortWorks::Params.get( params, "format", "html" )
     ShortWorks::Tmp.mkdir{

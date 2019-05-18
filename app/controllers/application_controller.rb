@@ -2,6 +2,7 @@ require "lib/modules/command"
 require "lib/modules/download"
 require "lib/modules/google_drive"
 require "lib/modules/params"
+require "lib/modules/speaker_deck"
 require "lib/modules/tmp"
 
 class ApplicationController < ActionController::Base
@@ -11,6 +12,12 @@ class ApplicationController < ActionController::Base
   end
   
 protected
+  def download_url( url )
+    url = ShortWorks::GoogleDrive.download_url( url )
+    url = ShortWorks::SpeakerDeck.download_url( url )
+    url
+  end
+  
   def gzsl_view( url, data, format )
     ShortWorks::Tmp.mkdir{
       begin
