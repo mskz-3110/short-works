@@ -57,6 +57,6 @@ class PdfController < ApplicationController
 private
   def pdf_to_gzsl_bytes( pdf_path, gzsl_path )
     return nil if ! ShortWorks::Command.pdf_to_png( pdf_path, "%03d.png" )
-    Gzsl.generate( gzsl_path, Dir.glob( "*.png" ) ) ? File.open( gzsl_path, "rb" ).read : nil
+    Gzsl.generate( gzsl_path, Dir.glob( "*.png" ).sort ) ? File.open( gzsl_path, "rb" ).read : nil
   end
 end
