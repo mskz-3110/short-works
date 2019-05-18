@@ -1,0 +1,7 @@
+<div>
+<%= form_tag( "/pdf/view.#{@view_format}", id: "form", method: "post" ){ %>
+  <%= hidden_field_tag( :data ) %>
+  <%= file_field_tag( :local_file ) %>
+  <%= submit_tag( "Upload", id: "upload", disabled: true ) %>
+<% } %>
+</div>

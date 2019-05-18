@@ -1,0 +1,9 @@
+<% if ! @err_msg.nil? %>
+  <div><font color="red"><%= @err_msg %></font></div>
+<% else %>
+  <div class="slide">
+  <% @gzsl_hash[ :images ].each{|image| %>
+    <div><img src="data:image/png;base64,<%= image %>" /></div>
+  <% } %>
+  </div>
+<% end %>
