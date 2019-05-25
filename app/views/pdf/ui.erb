@@ -1,7 +1,10 @@
 <div>
 <%= form_tag( "/pdf/view.#{@view_format}", id: "form", method: "post" ){ %>
-  <%= hidden_field_tag( :data ) %>
-  <%= file_field_tag( :local_file, accept: "application/pdf" ) %>
-  <%= submit_tag( "Upload", id: "upload", disabled: true ) %>
+  <table>
+    <tr><td><%= hidden_field_tag( :data ) %></td></tr>
+    <tr><td><%= text_field_tag( :url, "", placeholder: "URL" ) %></td></tr>
+    <tr><td><%= file_field_tag( :local_file, accept: "application/pdf" ) %></td></tr>
+    <tr><td><%= submit_tag( "Upload", id: "upload" ) %></td></tr>
+  </table>
 <% } %>
 </div>

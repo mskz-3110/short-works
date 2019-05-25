@@ -1,5 +1,9 @@
 <div>
-<% @lines.each{|line| %>
-  <div><font><%= line %></font><br></div>
+<% @routes.each{|route| %>
+  <% if "GET" == route[ :method ] %>
+    <div><h3><%= route[ :method ] %> <%= link_to route[ :rule ], :controller => route[ :path ][ 0 ], :action => route[ :path ][ 1 ] %></h3></div>
+  <% else %>
+    <div><h3><%= route[ :method ] %> <%= route[ :rule ] %></h3></div>
+  <% end %>
 <% } %>
 </div>
