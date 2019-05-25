@@ -16,6 +16,12 @@
  *= require slick-theme
  */
 
+* {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
 input {
   height: 30px;
 }
