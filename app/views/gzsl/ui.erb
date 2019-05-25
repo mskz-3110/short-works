@@ -2,9 +2,12 @@
 <%= form_tag( "/gzsl/view.#{@view_format}", id: "form", method: "post" ){ %>
   <table>
     <tr><td><%= hidden_field_tag( :data ) %></td></tr>
-    <tr><td><%= text_field_tag( :url, "", placeholder: "URL" ) %></td></tr>
-    <tr><td><%= file_field_tag( :local_file, accept: ".gzsl" ) %></td></tr>
-    <tr><td><%= submit_tag( "Upload", id: "upload" ) %></td></tr>
+    <tr>
+      <td><%= text_field_tag( :url, "", placeholder: "URL" ) %></td>
+      <td id="local_file_status">None</td>
+      <td><%= file_field_tag( :local_file, accept: ".gzsl" ) %></td>
+    </tr>
+    <tr><td><%= submit_tag( "Submit" ) %></td></tr>
   </table>
 <% } %>
 </div>

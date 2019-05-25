@@ -15,3 +15,12 @@
  *= require slick
  *= require slick-theme
  */
+
+input {
+  height: 30px;
+}
+
+input[type="submit"] {
+  border-radius: 30px;
+  padding: 10px 30px 25px 30px;
+}
