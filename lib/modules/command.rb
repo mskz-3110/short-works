@@ -15,5 +15,9 @@ module ShortWorks
     def self.pdf_to_png( pdf_path, png_path )
       system( "gs -q -sDEVICE=pngalpha -dBATCH -dNOPAUSE -dUseCropBox -sOutputFile=#{png_path} #{pdf_path}" )
     end
+    
+    def self.img_resize( size, path )
+      system( "mogrify -resize #{size} #{path}" )
+    end
   end
 end

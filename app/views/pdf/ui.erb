@@ -7,6 +7,7 @@
       <td id="local_file_status">None</td>
       <td><%= file_field_tag( :local_file, accept: "application/pdf" ) %></td>
     </tr>
+    <tr><td><%= text_field_tag( :size, @size, placeholder: "Size" ) %></td></tr>
     <tr><td><%= submit_tag( "Submit" ) %></td></tr>
   </table>
 <% } %>
