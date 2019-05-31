@@ -25,7 +25,11 @@ class QrcodeController < ApplicationController
       ShortWorks::Tmp.mkdir{
         raise "Download file error" if ! ShortWorks::Download.file( "A", url, Base64.strict_decode64( data ) )
         
-        @value = `zbarimg -q --raw A`.chomp
+        zbarimg = "zbarimg"
+        Dir.glob( "#{Rails.root}/vendor/bin" ).each{|path|
+          zbarimg = path
+        }
+        @value = `#{zbarimg} -q --raw A`.chomp
         case @format
         when "json"
           render :json => { :value => @value }
