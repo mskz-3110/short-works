@@ -27,7 +27,7 @@ class QrcodeController < ApplicationController
         
         zbarimg = "zbarimg"
         Dir.glob( "#{Rails.root}/vendor/bin/zbarimg" ).each{|path|
-          zbarimg = path
+          zbarimg = "LD_LIBRARY_PATH=#{Rails.root}/vendor/lib #{path}"
         }
         @value = `#{zbarimg} -q --raw A`.chomp
         case @format
