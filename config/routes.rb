@@ -3,12 +3,18 @@ Rails.application.routes.draw do
   
   get "/", to: "routes#view"
   
-  get "/pdf/ui/(:view_format)", to: "pdf#ui"
+  get "/pdf/ui/(:form_format)", to: "pdf#ui"
   get "/pdf/view", to: "pdf#view"
   post "/pdf/view", to: "pdf#view"
   get "/pdf/gzsl", to: "pdf#gzsl"
   
-  get "/gzsl/ui/(:view_format)", to: "gzsl#ui"
+  get "/gzsl/ui/(:form_format)", to: "gzsl#ui"
   get "/gzsl/view", to: "gzsl#view"
   post "/gzsl/view", to: "gzsl#view"
+  
+  get "/qrcode/ui/(:form_format)", to: "qrcode#ui"
+  get "/qrcode/create", to: "qrcode#create"
+  post "/qrcode/create", to: "qrcode#create"
+  get "/qrcode/view", to: "qrcode#view"
+  post "/qrcode/view", to: "qrcode#view"
 end

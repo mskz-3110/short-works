@@ -1,29 +1,22 @@
 class PdfController < ApplicationController
   def ui
-    @view_format = ShortWorks::Params.get( params, "view_format", "html" )
+    @form_format = ShortWorks::Params.get( params, "form_format", "html" )
     @size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
   end
   
   def view
     url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
     data = ShortWorks::Params.get( params, "data", "" )
-    format = ShortWorks::Params.get( params, "format", "html" )
     size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
-    ShortWorks::Tmp.mkdir{
-      begin
+    action{
+      ShortWorks::Tmp.mkdir{
         raise "Download file error" if ! ShortWorks::Download.file( "A.pdf", url, Base64.strict_decode64( data ) )
         
         gzsl_bytes = pdf_to_gzsl_bytes( "A.pdf", "A.gzsl", size )
         raise "PDF to GZSL error" if gzsl_bytes.nil?
         
-        gzsl_view( "", Base64.strict_encode64( gzsl_bytes ), format )
-      rescue => e
-        @err_msg = e.message
-        case format
-        when "json"
-          render :json => { :err_msg => @err_msg }
-        end
-      end
+        gzsl_view( "", Base64.strict_encode64( gzsl_bytes ) )
+      }
     }
   end
   
@@ -32,28 +25,21 @@ class PdfController < ApplicationController
     name = "gzsl_#{`date \"+%Y%m%d_%H%M\"`.chomp}" if name.empty?
     url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
     data = ShortWorks::Params.get( params, "data", "" )
-    format = ShortWorks::Params.get( params, "format", "html" )
     size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
-    ShortWorks::Tmp.mkdir{
-      begin
+    action{
+      ShortWorks::Tmp.mkdir{
         raise "Download file error" if ! ShortWorks::Download.file( "A.pdf", url, Base64.strict_decode64( data ) )
         
         gzsl_bytes = pdf_to_gzsl_bytes( "A.pdf", "A.gzsl", size )
         raise "PDF to GZSL error" if gzsl_bytes.nil?
         
-        case format
+        case @format
         when "json"
           render :json => { :gzsl => Base64.strict_encode64( gzsl_bytes ) }
         else
           send_data( gzsl_bytes, :filename => "#{name}.gzsl" )
         end
-      rescue => e
-        @err_msg = e.message
-        case format
-        when "json"
-          render :json => { :err_msg => @err_msg }
-        end
-      end
+      }
     }
   end
   

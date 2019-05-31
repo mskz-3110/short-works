@@ -1,5 +1,5 @@
 <div>
-<%= form_tag( "/gzsl/view.#{@view_format}", id: "form", method: "post" ){ %>
+<%= form_tag( "/gzsl/view.#{@form_format}", id: "form", method: "post" ){ %>
   <table>
     <tr><td><%= hidden_field_tag( :data ) %></td></tr>
     <tr>
@@ -7,7 +7,7 @@
       <td id="local_file_status">None</td>
       <td><%= file_field_tag( :local_file, accept: ".gzsl" ) %></td>
     </tr>
-    <tr><td><%= submit_tag( "Submit" ) %></td></tr>
+    <tr><td><%= submit_tag( "View" ) %></td></tr>
   </table>
 <% } %>
 </div>

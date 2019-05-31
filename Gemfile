@@ -60,3 +60,6 @@ gem "jquery-rails"
 gem "jquery-slick-rails"
 
 gem "gzsl"
+
+gem "rqrcode"
+gem "rqrcode_png"
