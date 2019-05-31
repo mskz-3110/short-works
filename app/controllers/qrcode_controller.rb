@@ -26,7 +26,7 @@ class QrcodeController < ApplicationController
         raise "Download file error" if ! ShortWorks::Download.file( "A", url, Base64.strict_decode64( data ) )
         
         zbarimg = "zbarimg"
-        Dir.glob( "#{Rails.root}/vendor/bin" ).each{|path|
+        Dir.glob( "#{Rails.root}/vendor/bin/zbarimg" ).each{|path|
           zbarimg = path
         }
         @value = `#{zbarimg} -q --raw A`.chomp
