@@ -32,5 +32,3 @@ environment ENV["RAILS_ENV"]
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
-
-worker_timeout (5*60)
