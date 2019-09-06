@@ -2,13 +2,13 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-  slick = $( ".slide" ).slick({
-    infinite: true,
+  slick = $( ".horizontal-slide" ).slick({
+    infinite: false,
     centerMode: true,
     variableWidth: true
   })
   
-  $( ".slide" ).on( "click", ( event ) ->
+  $( ".horizontal-slide" ).on( "click", ( event ) ->
     x = event.pageX
     rect = @getBoundingClientRect()
     if x < ( rect.width / 2 )
@@ -27,3 +27,5 @@ $ ->
       $( "#local_file" ).val( "" )
     file_reader.readAsDataURL( $( "#local_file" ).prop( "files" )[ 0 ] )
   )
+  
+  $( ".slide" ).css( "visibility", "visible" )

@@ -7,7 +7,10 @@
       <td id="local_file_status">None</td>
       <td><%= file_field_tag( :local_file, accept: ".gzsl" ) %></td>
     </tr>
-    <tr><td><%= submit_tag( "View" ) %></td></tr>
+    <tr>
+      <td><%= submit_tag( "Vertical View" ) %></td>
+      <td><%= submit_tag( "Horizontal View" ) %></td>
+    </tr>
   </table>
 <% } %>
 </div>

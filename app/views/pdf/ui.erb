@@ -8,7 +8,10 @@
       <td><%= file_field_tag( :local_file, accept: "application/pdf" ) %></td>
     </tr>
     <tr><td><%= text_field_tag( :size, @size, placeholder: "Size" ) %></td></tr>
-    <tr><td><%= submit_tag( "View" ) %></td></tr>
+    <tr>
+      <td><%= submit_tag( "Vertical View" ) %></td>
+      <td><%= submit_tag( "Horizontal View" ) %></td>
+    </tr>
   </table>
 <% } %>
 </div>

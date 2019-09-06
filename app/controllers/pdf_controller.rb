@@ -8,6 +8,8 @@ class PdfController < ApplicationController
     url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
     data = ShortWorks::Params.get( params, "data", "" )
     size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
+    commit = ShortWorks::Params.get( params, "commit", "" )
+    @slide_class = ( "Horizontal View" == commit ) ? "horizontal-slide" : ""
     action{
       ShortWorks::Tmp.mkdir{
         raise "Download file error" if ! ShortWorks::Download.file( "A.pdf", url, Base64.strict_decode64( data ) )
