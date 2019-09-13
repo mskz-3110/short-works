@@ -51,7 +51,7 @@ GEM
     bootsnap (1.4.5)
       msgpack (~> 1.0)
     builder (3.2.3)
-    buildrake (0.0.8)
+    buildrake (0.0.7)
       nokogiri
     byebug (11.0.1)
     capybara (3.29.0)
