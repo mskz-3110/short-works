@@ -1,9 +1,9 @@
 <div><h2>
 <% @routes.each{|route| %>
   <% if "GET" == route[ :method ] %>
-    <div><%= route[ :method ] %> <%= link_to route[ :rule ], :controller => route[ :path ][ 0 ], :action => route[ :path ][ 1 ] %></div>
+    <div><%= route[ :method ] %> <%= link_to route[ :path ], route[ :path ] %></div>
   <% else %>
-    <div><%= route[ :method ] %> <%= route[ :rule ] %></div>
+    <div><%= route[ :method ] %> <%= route[ :path ] %></div>
   <% end %>
   <br>
 <% } %>

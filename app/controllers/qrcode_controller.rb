@@ -1,4 +1,14 @@
 class QrcodeController < ApplicationController
+  def self.routes
+    [
+      { :method => "GET", :path => "/qrcode/ui" },
+      { :method => "GET", :path => "/qrcode/ui/json" },
+      { :method => "POST", :path => "/qrcode/ui" },
+      { :method => "POST", :path => "/qrcode/view" },
+      { :method => "POST", :path => "/qrcode/create" }
+    ]
+  end
+  
   def create
     value = ShortWorks::Params.get( params, "value", "" )
     action{

@@ -1,4 +1,14 @@
 class PdfController < ApplicationController
+  def self.routes
+    [
+      { :method => "GET", :path => "/pdf/ui" },
+      { :method => "GET", :path => "/pdf/ui/json" },
+      { :method => "POST", :path => "/pdf/ui" },
+      { :method => "POST", :path => "/pdf/view" },
+      { :method => "POST", :path => "/pdf/gzsl" }
+    ]
+  end
+  
   def view
     pdf_url = ShortWorks::Params.get( params, "pdf_url", "" ){|value| download_url( validate_url( value ) )}
     width = ShortWorks::Params.get( params, "width", @width ){|value| validate_number( value )}

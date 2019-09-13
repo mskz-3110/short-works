@@ -1,4 +1,14 @@
 class MarkdownController < ApplicationController
+  def self.routes
+    [
+      { :method => "GET", :path => "/markdown/ui" },
+      { :method => "GET", :path => "/markdown/ui/json" },
+      { :method => "POST", :path => "/markdown/ui" },
+      { :method => "POST", :path => "/markdown/view" },
+      { :method => "POST", :path => "/markdown/pdf" }
+    ]
+  end
+  
   def view
     markdown_url = ShortWorks::Params.get( params, "markdown_url", "" ){|value| download_url( validate_url( value ) )}
     css_url = ShortWorks::Params.get( params, "css_url", "" ){|value| download_url( validate_url( value ) )}

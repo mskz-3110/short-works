@@ -1,4 +1,13 @@
 class GzslController < ApplicationController
+  def self.routes
+    [
+      { :method => "GET", :path => "/gzsl/ui" },
+      { :method => "GET", :path => "/gzsl/ui/json" },
+      { :method => "POST", :path => "/gzsl/ui" },
+      { :method => "POST", :path => "/pdf/view" }
+    ]
+  end
+  
   def view
     gzsl_url = ShortWorks::Params.get( params, "gzsl_url", "" ){|value| download_url( validate_url( value ) )}
     @output_format = ShortWorks::Params.get( params, "output_format", "" )
