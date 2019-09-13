@@ -1,5 +1,26 @@
 {
   "name": "short-works",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "markdown-pdf": "git+https://github.com/mskz-3110/markdown-pdf#pullreq_add_paperWidth_and_paperHeight"
+  },
+  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "version": "0.0.1",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mskz-3110/short-works.git"
+  },
+  "author": "mskz-3110",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mskz-3110/short-works/issues"
+  },
+  "homepage": "https://github.com/mskz-3110/short-works"
 }

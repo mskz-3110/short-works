@@ -1,13 +1,14 @@
 <div>
-<%= form_tag( "/qrcode/view.#{@form_format}", id: "form", method: "post" ){ %>
+<%= form_tag( "/qrcode/ui/#{@output_format}", id: "form", method: "post" ){ %>
   <table>
-    <tr><td><%= hidden_field_tag( :data ) %></td></tr>
     <tr>
-      <td><%= text_field_tag( :url, "", placeholder: "URL" ) %></td>
-      <td id="local_file_status">None</td>
-      <td><%= file_field_tag( :local_file, accept: "image/*" ) %></td>
+      <td><%= text_field_tag( :value, "", placeholder: "QRCODE VALUE" ) %></td>
+      <td><%= submit_tag( "create" ) %></td>
     </tr>
-    <tr><td><%= submit_tag( "View" ) %></td></tr>
+    <tr>
+      <td><%= text_field_tag( :qrcode_url, "", placeholder: "QRCODE URL" ) %></td>
+      <td><%= submit_tag( "view" ) %></td>
+    </tr>
   </table>
 <% } %>
 </div>

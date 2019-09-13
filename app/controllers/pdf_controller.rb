@@ -1,58 +1,38 @@
 class PdfController < ApplicationController
-  def ui
-    @form_format = ShortWorks::Params.get( params, "form_format", "html" )
-    @size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
-  end
-  
   def view
-    url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
-    data = ShortWorks::Params.get( params, "data", "" )
-    size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
-    commit = ShortWorks::Params.get( params, "commit", "" )
-    @slide_class = ( "Horizontal View" == commit ) ? "horizontal-slide" : ""
+    pdf_url = ShortWorks::Params.get( params, "pdf_url", "" ){|value| download_url( validate_url( value ) )}
+    width = ShortWorks::Params.get( params, "width", @width ){|value| validate_number( value )}
+    height = ShortWorks::Params.get( params, "height", @height ){|value| validate_number( value )}
+    @output_format = ShortWorks::Params.get( params, "output_format", "" )
+    @direction = ShortWorks::Params.get( params, "direction", "V" ){|value| validate_direction( value )}
     action{
       ShortWorks::Tmp.mkdir{
-        raise "Download file error" if ! ShortWorks::Download.file( "A.pdf", url, Base64.strict_decode64( data ) )
+        raise "Download error: #{pdf_url}" if ! ShortWorks::Download.file( "A.pdf", pdf_url )
+        raise "PDF error" if ! pdf_to_gzsl( "A.gzsl", "A.pdf", width, height )
         
-        gzsl_bytes = pdf_to_gzsl_bytes( "A.pdf", "A.gzsl", size )
-        raise "PDF to GZSL error" if gzsl_bytes.nil?
-        
-        gzsl_view( "", Base64.strict_encode64( gzsl_bytes ) )
+        gzsl_view( "A.gzsl", @output_format )
       }
     }
   end
   
   def gzsl
-    name = ShortWorks::Params.get( params, "name", "" ){|value| File.basename( value )}
-    name = "gzsl_#{`date \"+%Y%m%d_%H%M\"`.chomp}" if name.empty?
-    url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
-    data = ShortWorks::Params.get( params, "data", "" )
-    size = ShortWorks::Params.get( params, "size", "" ){|value| pdf_size( value )}
+    pdf_url = ShortWorks::Params.get( params, "pdf_url", "" ){|value| download_url( validate_url( value ) )}
+    width = ShortWorks::Params.get( params, "width", @width ){|value| validate_number( value )}
+    height = ShortWorks::Params.get( params, "height", @height ){|value| validate_number( value )}
+    @output_format = ShortWorks::Params.get( params, "output_format", "" )
     action{
       ShortWorks::Tmp.mkdir{
-        raise "Download file error" if ! ShortWorks::Download.file( "A.pdf", url, Base64.strict_decode64( data ) )
+        raise "Download error: #{pdf_url}" if ! ShortWorks::Download.file( "A.pdf", pdf_url )
+        raise "PDF error" if ! pdf_to_gzsl( "A.gzsl", "A.pdf", width, height )
         
-        gzsl_bytes = pdf_to_gzsl_bytes( "A.pdf", "A.gzsl", size )
-        raise "PDF to GZSL error" if gzsl_bytes.nil?
-        
-        case @format
+        bytes = file_to_bytes( "A.gzsl" )
+        case @output_format
         when "json"
-          render :json => { :gzsl => Base64.strict_encode64( gzsl_bytes ) }
+          render :json => { :gzsl => Base64.strict_encode64( bytes ) }
         else
-          send_data( gzsl_bytes, :filename => "#{name}.gzsl" )
+          send_data( bytes, :filename => "ShortWorks.gzsl" )
         end
       }
     }
-  end
-  
-private
-  def pdf_size( value )
-    ( /^([0-9]+)x([0-9]+)!?$/ =~ value ) ? value : "720x405"
-  end
-  
-  def pdf_to_gzsl_bytes( pdf_path, gzsl_path, size )
-    return nil if ! ShortWorks::Command.pdf_to_png( pdf_path, "%03d.png" )
-    return nil if ! ShortWorks::Command.img_resize( size, "*.png" ) if ! size.empty?
-    Gzsl.generate( gzsl_path, Dir.glob( "*.png" ).sort ) ? File.open( gzsl_path, "rb" ).read : nil
   end
 end

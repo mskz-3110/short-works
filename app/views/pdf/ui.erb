@@ -1,17 +1,10 @@
 <div>
-<%= form_tag( "/pdf/view.#{@form_format}", id: "form", method: "post" ){ %>
+<%= form_tag( "/pdf/ui/#{@output_format}", id: "form", method: "post" ){ %>
   <table>
-    <tr><td><%= hidden_field_tag( :data ) %></td></tr>
-    <tr>
-      <td><%= text_field_tag( :url, "", placeholder: "URL" ) %></td>
-      <td id="local_file_status">None</td>
-      <td><%= file_field_tag( :local_file, accept: "application/pdf" ) %></td>
-    </tr>
-    <tr><td><%= text_field_tag( :size, @size, placeholder: "Size" ) %></td></tr>
-    <tr>
-      <td><%= submit_tag( "Vertical View" ) %></td>
-      <td><%= submit_tag( "Horizontal View" ) %></td>
-    </tr>
+    <tr><td><%= text_field_tag( :pdf_url, "", placeholder: "PDF URL" ) %></td></tr>
+    <tr><td><%= render "ui/width" %> x <%= render "ui/height" %></td></tr>
+    <tr><%= render "ui/direction_view" %></tr>
+    <tr><td><%= submit_tag( "gzsl" ) %></td></tr>
   </table>
 <% } %>
 </div>

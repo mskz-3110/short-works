@@ -3,18 +3,22 @@ Rails.application.routes.draw do
   
   get "/", to: "routes#view"
   
-  get "/pdf/ui/(:form_format)", to: "pdf#ui"
-  get "/pdf/view", to: "pdf#view"
+  get "/pdf/ui/(:output_format)", to: "pdf#ui"
+  post "/pdf/ui/(:output_format)", to: "pdf#ui"
   post "/pdf/view", to: "pdf#view"
-  get "/pdf/gzsl", to: "pdf#gzsl"
+  post "/pdf/gzsl", to: "pdf#gzsl"
   
-  get "/gzsl/ui/(:form_format)", to: "gzsl#ui"
-  get "/gzsl/view", to: "gzsl#view"
+  get "/gzsl/ui/(:output_format)", to: "gzsl#ui"
+  post "/gzsl/ui/(:output_format)", to: "gzsl#ui"
   post "/gzsl/view", to: "gzsl#view"
   
-  get "/qrcode/ui/(:form_format)", to: "qrcode#ui"
-  get "/qrcode/create", to: "qrcode#create"
+  get "/qrcode/ui/(:output_format)", to: "qrcode#ui"
+  post "/qrcode/ui/(:output_format)", to: "qrcode#ui"
   post "/qrcode/create", to: "qrcode#create"
-  get "/qrcode/view", to: "qrcode#view"
   post "/qrcode/view", to: "qrcode#view"
+  
+  get "/markdown/ui/(:output_format)", to: "markdown#ui"
+  post "/markdown/ui/(:output_format)", to: "markdown#ui"
+  post "/markdown/view", to: "markdown#view"
+  post "/markdown/pdf", to: "markdown#pdf"
 end

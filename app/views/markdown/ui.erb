@@ -1,0 +1,11 @@
+<div>
+<%= form_tag( "/markdown/ui/#{@output_format}", id: "form", method: "post" ){ %>
+  <table>
+    <tr><td><%= text_field_tag( :markdown_url, "", placeholder: "MARKDOWN URL" ) %></td></tr>
+    <tr><td><%= text_field_tag( :css_url, "", placeholder: "CSS URL" ) %></td></tr>
+    <tr><td><%= render "ui/width" %> x <%= render "ui/height" %></td></tr>
+    <tr><%= render "ui/direction_view" %></tr>
+    <tr><td><%= submit_tag( "pdf" ) %></td></tr>
+  </table>
+<% } %>
+</div>

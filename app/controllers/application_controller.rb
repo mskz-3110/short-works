@@ -8,10 +8,37 @@ require "lib/modules/tmp"
 class ApplicationController < ActionController::Base
   def initialize
     @err_msg = nil
+    @width = "720"
+    @height = "405"
     super
   end
   
+  def ui
+    commit = ShortWorks::Params.get( params, "commit", "" )
+    if ! commit.empty?
+      send commit
+    else
+      @output_format = ShortWorks::Params.get( params, "output_format", "" )
+    end
+  end
+  
 protected
+  def validate( regex, value )
+    regex =~ value ? value : ""
+  end
+  
+  def validate_number( value )
+    validate( /^[0-9]+$/, value )
+  end
+  
+  def validate_url( value )
+    validate( /^(http|https|file):\/\/[\w\.\/\?%=&]+$/, value )
+  end
+  
+  def validate_direction( value )
+    validate( /^[HV]$/, value )
+  end
+  
   def download_url( url )
     url = ShortWorks::GoogleDrive.download_url( url )
     url = ShortWorks::SpeakerDeck.download_url( url )
@@ -26,7 +53,7 @@ protected
       @err_msg = e.message
       case Rails.env
       when "development"
-        @err_msg = "#{@err_msg}\n#{e.backtrace.join( '\n' )}"
+        @err_msg = [ @err_msg ].concat( e.backtrace ).join( "\n" )
       end
       
       case @format
@@ -38,29 +65,31 @@ protected
     end
   end
   
-  def gzsl_view( url, data )
+  def gzsl_view( path, format )
     action{
-      ShortWorks::Tmp.mkdir{
-        raise "Download file error" if ! ShortWorks::Download.file( "A.gzsl", url, Base64.strict_decode64( data ) )
-        
-        @gzsl_hash = Gzsl.parse( "A.gzsl" )
-        raise "Gzsl parse error" if @gzsl_hash.nil?
-        
-        @gzsl_hash[ :images ].each_with_index{|image, index|
-          @gzsl_hash[ :images ][ index ] = Base64.strict_encode64( image )
-        }
-        
-        case @format
-        when "json"
-          render :json => @gzsl_hash
-        end
+      @gzsl = Gzsl.parse( path )
+      raise "Gzsl error" if @gzsl.nil?
+      
+      @gzsl[ :images ].each_with_index{|image, index|
+        @gzsl[ :images ][ index ] = Base64.strict_encode64( image )
       }
       
-      case @format
+      case format
       when "json"
+        render :json => @gzsl
       else
         render :template => "gzsl/view"
       end
     }
+  end
+  
+  def file_to_bytes( path )
+    File.open( path, "rb" ).read
+  end
+  
+  def pdf_to_gzsl( gzsl_path, pdf_path, width, height )
+    return false if ! ShortWorks::Command.pdf_to_png( pdf_path, "%03d.png" )
+    return false if ! ShortWorks::Command.img_resize( "*.png", width, height )
+    Gzsl.generate( gzsl_path, Dir.glob( "*.png" ).sort )
   end
 end

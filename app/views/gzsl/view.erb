@@ -1,5 +1,5 @@
-<div class="center slide <%= @slide_class %>">
-<% @gzsl_hash[ :images ].each{|image| %>
+<div class="center slide <%= @direction %>-slide">
+<% @gzsl[ :images ].each{|image| %>
   <div class="slide-image"><img src="data:image/png;base64,<%= image %>" /></div>
 <% } %>
 </div>

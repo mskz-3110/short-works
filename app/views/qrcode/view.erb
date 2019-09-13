@@ -1,7 +1,1 @@
-<div>
-<% if /^https?:\/\// =~ @value %>
-  <%= link_to @value, @value, target: "_blank" %>
-<% else %>
-  <%= @value %>
-<% end %>
-</div>
+<div><%= @value %></div>

@@ -1,13 +1,14 @@
 class GzslController < ApplicationController
-  def ui
-    @form_format = ShortWorks::Params.get( params, "form_format", "html" )
-  end
-  
   def view
-    url = ShortWorks::Params.get( params, "url", "" ){|value| download_url( value )}
-    data = ShortWorks::Params.get( params, "data", "" )
-    commit = ShortWorks::Params.get( params, "commit", "" )
-    @slide_class = ( "Horizontal View" == commit ) ? "horizontal-slide" : ""
-    gzsl_view( url, data )
+    gzsl_url = ShortWorks::Params.get( params, "gzsl_url", "" ){|value| download_url( validate_url( value ) )}
+    @output_format = ShortWorks::Params.get( params, "output_format", "" )
+    @direction = ShortWorks::Params.get( params, "direction", "V" ){|value| validate_direction( value )}
+    action{
+      ShortWorks::Tmp.mkdir{
+        raise "Download error: #{gzsl_url}" if ! ShortWorks::Download.file( "A.gzsl", gzsl_url )
+        
+        gzsl_view( "A.gzsl", @output_format )
+      }
+    }
   end
 end
