@@ -32,7 +32,7 @@ protected
   end
   
   def validate_url( value )
-    validate( /^(http|https|file):\/\/[\w\.\/\?%=&]+$/, value )
+    validate( /^(http|https|file):\/\/[\w\-\.\/\?%=&]+$/, value )
   end
   
   def validate_direction( value )
