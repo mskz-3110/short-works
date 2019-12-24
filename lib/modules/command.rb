@@ -29,7 +29,10 @@ module ShortWorks
       css_path = "#{__DIR__}/markdown-pdf.css" if ! File.exists?( css_path )
       options[ :width ] = "720" if ! options.key?( :width )
       options[ :height ] = "405" if ! options.key?( :height )
-      execute( "node #{__DIR__}/markdown-pdf.js #{pdf_path} #{markdown_path} #{css_path} #{options[ :width ]}px #{options[ :height ]}px" )
+      width = options[ :width ].to_i
+      height = options[ :height ].to_i
+      options[ :orientation ] = ( width < height ) ? "portrait" : "landscape"
+      execute( "node #{__DIR__}/markdown-pdf.js #{pdf_path} #{markdown_path} #{css_path} #{options[ :width ]}px #{options[ :height ]}px #{options[ :orientation ]}" )
     end
   end
 end
