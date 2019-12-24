@@ -17,7 +17,7 @@ module ShortWorks
     end
     
     def self.pdf_to_png( pdf_path, png_path )
-      execute( "gs -q -sDEVICE=pngalpha -dBATCH -dNOPAUSE -dUseCropBox -sOutputFile=#{png_path} #{pdf_path}" )
+      execute( "gs -q -sDEVICE=pngalpha -dBATCH -dNOPAUSE -dPDFSETTINGS=/prepress -sOutputFile=#{png_path} #{pdf_path}" )
     end
     
     def self.img_resize( path, width, height )
