@@ -1,24 +1,9 @@
-# README
+# short-works
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 機能一覧
+|機能名|概要|
+|:-|:-|
+|pdf|PDFを画像スライドで表示／PDFの画像スライドを作成|
+|gzsl|画像スライドを表示|
+|qrcode|QRコードの作成／表示|
+|markdown|Markdownを画像スライドで表示／MarkdownをPDFに変換|
